@@ -7,12 +7,19 @@ const rollAdvice = function () {
   fetch("https://api.adviceslip.com/advice")
     .then((response) => response.json())
     .then((data) => {
-      adviceText.textContent = data.slip.advice;
-      adviceNumber.textContent = "#" + data.slip.id;
+      generateAdvice(data);
+    })
+    .catch((err) => {
+      console.error(`Error: ${err} `);
+      adviceText.textContent = `Sorry, we have issues. Try again later`;
+      adviceNumber.textContent = "#";
     });
 };
 
-rollAdvice();
+function generateAdvice(data) {
+  adviceText.textContent = `"${data.slip.advice}"`;
+  adviceNumber.textContent = "#" + data.slip.id;
+}
 
 dice.addEventListener("click", rollAdvice);
 
